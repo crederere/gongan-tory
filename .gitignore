@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.env
+generate_images.py
+generate_remaining.py
