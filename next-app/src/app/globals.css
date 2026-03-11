@@ -50,14 +50,36 @@
   }
 }
 
+/* ── Marquee ── */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 .animate-marquee {
-  animation: marquee 25s linear infinite;
+  animation: marquee 32s linear infinite;
 }
 
+/* ── Float ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float { animation: float 5s ease-in-out infinite; }
+
+/* ── Shimmer sweep ── */
+@keyframes shimmer-sweep {
+  0% { background-position: -300% 0; }
+  100% { background-position: 300% 0; }
+}
+
+/* ── Glow pulse ── */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(196,149,106,0.2); }
+  50% { box-shadow: 0 0 40px rgba(196,149,106,0.4); }
+}
+.animate-glow { animation: glow 3s ease-in-out infinite; }
+
+/* ── Grain texture ── */
 .grain { position: relative; }
 .grain::after {
   content: '';
@@ -70,5 +92,55 @@
   z-index: 1;
 }
 
+/* ── Scrollbar ── */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Gradient text ── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Highlight underline ── */
+.highlight {
+  position: relative;
+  display: inline;
+}
+.highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 1px;
+  left: -3px;
+  right: -3px;
+  height: 28%;
+  background: var(--color-accent-light);
+  opacity: 0.55;
+  z-index: -1;
+  border-radius: 2px;
+  transform: skew(-1.5deg);
+}
+
+/* ── Card hover lift ── */
+.card-hover {
+  transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 64px -16px rgba(30, 23, 16, 0.14);
+}
+
+/* ── Glass ── */
+.glass {
+  background: rgba(250, 248, 245, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* ── Section fade ── */
+.section-fade-top {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%);
+  mask-image: linear-gradient(to bottom, transparent, black 10%);
+}
