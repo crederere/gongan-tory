@@ -22,34 +22,41 @@ export default function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled ? "bg-warm-950/80 backdrop-blur-2xl border-b border-white/[0.06]" : "bg-transparent"
+      scrolled
+        ? "glass-strong border-b border-n-200/60 shadow-[0_1px_24px_-6px_rgba(0,0,0,0.06)]"
+        : "bg-transparent"
     }`}>
-      <div className="mx-auto max-w-6xl flex items-center justify-between px-6 h-16">
-        <a href="#" className="text-lg font-bold tracking-tight text-white">공간토리</a>
+      <div className="mx-auto max-w-6xl flex items-center justify-between px-6 h-[68px]">
+        <a href="#" className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-600 to-primary-400 flex items-center justify-center shadow-md shadow-primary-600/20">
+            <span className="text-white text-xs font-bold tracking-tight">G</span>
+          </div>
+          <span className="text-lg font-bold tracking-tight text-n-900">공간토리</span>
+        </a>
 
         {/* Desktop */}
-        <div className="hidden md:flex items-center gap-7">
+        <div className="hidden md:flex items-center gap-1">
           {links.map((l) => (
             <a key={l.href} href={l.href}
-              className="text-sm text-warm-400 hover:text-white transition-colors duration-200">
+              className="text-sm text-n-500 hover:text-n-900 transition-colors duration-200 px-4 py-2 rounded-lg hover:bg-n-100/70">
               {l.label}
             </a>
           ))}
           <a href="/survey"
-            className="text-sm text-warm-400 hover:text-white transition-colors duration-200">
+            className="text-sm text-n-500 hover:text-n-900 transition-colors duration-200 px-4 py-2 rounded-lg hover:bg-n-100/70">
             설문지
           </a>
           <a href="#contact"
-            className="text-sm font-semibold px-5 py-2.5 rounded-full bg-accent text-white hover:bg-accent-dark transition-all duration-200 shadow-lg shadow-accent/20 active:scale-[0.97]">
+            className="ml-3 text-sm font-semibold px-6 py-2.5 rounded-full bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:from-primary-700 hover:to-primary-600 transition-all duration-300 btn-glow active:scale-[0.97]">
             상담 신청
           </a>
         </div>
 
         {/* Mobile Toggle */}
-        <button onClick={() => setOpen(!open)} className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px]" aria-label="메뉴">
-          <motion.span animate={{ rotate: open ? 45 : 0, y: open ? 7 : 0 }} className="block w-5 h-[1.5px] bg-white" />
-          <motion.span animate={{ opacity: open ? 0 : 1 }} className="block w-5 h-[1.5px] bg-white" />
-          <motion.span animate={{ rotate: open ? -45 : 0, y: open ? -7 : 0 }} className="block w-5 h-[1.5px] bg-white" />
+        <button onClick={() => setOpen(!open)} className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] rounded-xl hover:bg-n-100/60 transition-colors" aria-label="메뉴">
+          <motion.span animate={{ rotate: open ? 45 : 0, y: open ? 7 : 0 }} className="block w-5 h-[1.5px] bg-n-800 rounded-full" />
+          <motion.span animate={{ opacity: open ? 0 : 1 }} className="block w-5 h-[1.5px] bg-n-800 rounded-full" />
+          <motion.span animate={{ rotate: open ? -45 : 0, y: open ? -7 : 0 }} className="block w-5 h-[1.5px] bg-n-800 rounded-full" />
         </button>
       </div>
 
@@ -61,18 +68,18 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden bg-warm-950/95 backdrop-blur-2xl border-t border-white/[0.06] overflow-hidden"
+            className="md:hidden glass-strong border-t border-n-200/50 overflow-hidden"
           >
-            <div className="px-6 py-6 flex flex-col gap-5">
+            <div className="px-6 py-6 flex flex-col gap-1">
               {links.map((l) => (
                 <a key={l.href} href={l.href} onClick={() => setOpen(false)}
-                  className="text-base text-warm-300 hover:text-white transition-colors">
+                  className="text-base text-n-700 hover:text-n-900 hover:bg-n-100/60 transition-all px-4 py-3 rounded-xl">
                   {l.label}
                 </a>
               ))}
-              <a href="/survey" onClick={() => setOpen(false)} className="text-base text-warm-300 hover:text-white transition-colors">설문지</a>
+              <a href="/survey" onClick={() => setOpen(false)} className="text-base text-n-700 hover:text-n-900 hover:bg-n-100/60 transition-all px-4 py-3 rounded-xl">설문지</a>
               <a href="#contact" onClick={() => setOpen(false)}
-                className="mt-1 text-center text-sm font-semibold px-5 py-3.5 rounded-full bg-accent text-white">
+                className="mt-3 text-center text-sm font-semibold px-5 py-3.5 rounded-full bg-gradient-to-r from-primary-600 to-primary-500 text-white btn-glow">
                 상담 신청
               </a>
             </div>

@@ -33,15 +33,17 @@ const marqueeItems = [
 
 export default function TrustBar() {
   return (
-    <section className="py-20 md:py-28 bg-white overflow-hidden">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="relative py-20 md:py-28 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-n-50 to-n-50" />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
         {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="grid grid-cols-3 sm:grid-cols-3 gap-8 sm:gap-16 justify-items-center mb-16"
+          className="grid grid-cols-3 gap-6 sm:gap-12 justify-items-center mb-16"
         >
           {[
             { value: 5.0, label: "당근마켓 평점", suffix: "", decimal: true },
@@ -56,21 +58,23 @@ export default function TrustBar() {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               className="text-center"
             >
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-warm-900 tracking-tighter leading-none mb-3">
+              <div className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-n-900 tracking-tighter leading-none mb-3">
                 <Counter target={s.value} decimal={s.decimal} />
-                {s.suffix && <span className="text-warm-300">{s.suffix}</span>}
+                {s.suffix && <span className="gradient-text">{s.suffix}</span>}
               </div>
-              <p className="text-xs md:text-sm text-warm-400 tracking-wide">{s.label}</p>
+              <p className="text-xs md:text-sm text-n-400 tracking-wide font-medium">{s.label}</p>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Marquee strip */}
+        {/* Marquee */}
         <div className="relative overflow-hidden py-4">
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-n-50 to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-n-50 to-transparent z-10" />
           <div className="flex gap-6 w-max animate-marquee">
             {[...marqueeItems, ...marqueeItems].map((item, i) => (
-              <span key={i} className="inline-flex items-center gap-2 text-xs text-warm-400 whitespace-nowrap">
-                <span className="w-1 h-1 rounded-full bg-accent/50" />
+              <span key={i} className="inline-flex items-center gap-2 text-xs text-n-400 whitespace-nowrap font-medium">
+                <span className="w-1 h-1 rounded-full bg-primary-400" />
                 {item}
               </span>
             ))}

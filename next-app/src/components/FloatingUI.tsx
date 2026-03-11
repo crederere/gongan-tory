@@ -25,17 +25,17 @@ export default function FloatingUI() {
             transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
             className="fixed bottom-0 left-0 right-0 z-40 pb-safe"
           >
-            <div className="bg-warm-950/90 backdrop-blur-xl border-t border-white/[0.07] px-4 py-3">
+            <div className="glass-strong border-t border-n-200/60 shadow-[0_-4px_24px_-4px_rgba(0,0,0,0.08)] px-4 py-3">
               <div className="mx-auto max-w-lg flex items-center gap-3">
                 <div className="flex-1">
                   <a href="#contact"
-                    className="block w-full py-3 rounded-full bg-accent text-white text-sm font-bold text-center hover:bg-accent-dark transition-all active:scale-[0.98] shadow-lg shadow-accent/20">
+                    className="block w-full py-3 rounded-full bg-gradient-to-r from-primary-600 to-primary-500 text-white text-sm font-bold text-center hover:from-primary-700 hover:to-primary-600 transition-all active:scale-[0.98] btn-glow">
                     무료 상담 신청하기
                   </a>
                 </div>
               </div>
-              <p className="text-center mt-1.5 text-[10px] text-warm-600">
-                3월 잔여 <strong className="text-warm-400">8건</strong> · 무료 상담 후 결정하셔도 됩니다
+              <p className="text-center mt-1.5 text-[10px] text-n-400">
+                3월 잔여 <strong className="text-n-600">8건</strong> · 무료 상담 후 결정하셔도 됩니다
               </p>
             </div>
           </motion.div>
