@@ -32,17 +32,11 @@ const steps = [
 export default function Process() {
   return (
     <section id="process" className="relative py-24 md:py-36 bg-white overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-n-200 to-transparent" />
-      <div className="absolute bottom-20 left-[-5%] w-[400px] h-[400px] rounded-full bg-primary-50/40 blur-[100px]" />
-
-      <div className="relative z-10 mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold text-primary-600 bg-primary-50 border border-primary-100 rounded-full px-4 py-1.5 mb-6 tracking-wide uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary-500" />
-              Process
-            </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-n-900 tracking-tight leading-snug">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-n-400 font-medium mb-6">Process</p>
+            <h2 className="text-3xl md:text-[2.75rem] font-extrabold text-n-900 tracking-tight leading-[1.15]">
               정리는 이렇게<br />진행돼요
             </h2>
           </div>
@@ -50,21 +44,21 @@ export default function Process() {
 
         <div className="max-w-2xl mx-auto">
           {steps.map((step, i) => (
-            <FadeIn key={i} delay={i * 0.1}>
+            <FadeIn key={i} delay={i * 0.08}>
               <div className="flex gap-6 mb-8 last:mb-0">
                 <div className="flex flex-col items-center flex-shrink-0">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-600 to-primary-500 text-white text-sm font-bold flex items-center justify-center shadow-lg shadow-primary-600/20 tracking-wider">
+                  <div className="w-12 h-12 rounded-full bg-n-900 text-white text-xs font-semibold flex items-center justify-center tracking-wider">
                     {step.num}
                   </div>
                   {i < steps.length - 1 && (
-                    <div className="w-px flex-1 mt-3 bg-gradient-to-b from-primary-200 to-transparent" />
+                    <div className="w-px flex-1 mt-3 bg-n-200" />
                   )}
                 </div>
 
                 <div className="pt-2 pb-10">
                   <h4 className="text-lg font-bold text-n-900 mb-2">{step.title}</h4>
                   <p className="text-sm text-n-500 leading-relaxed mb-2">{step.desc}</p>
-                  <p className="text-xs text-primary-600 font-medium bg-primary-50 inline-block px-3 py-1 rounded-full">{step.detail}</p>
+                  <p className="text-[12px] text-n-400 font-medium">{step.detail}</p>
                 </div>
               </div>
             </FadeIn>
@@ -73,11 +67,9 @@ export default function Process() {
 
         <FadeIn>
           <div className="mt-4 text-center">
-            <a href="#contact" className="group inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700 bg-white rounded-full px-6 py-3 border border-primary-200 hover:border-primary-300 shadow-sm hover:shadow-md transition-all duration-300">
+            <a href="#contact" className="text-sm font-medium text-n-500 hover:text-n-900 transition-colors inline-flex items-center gap-1.5">
               지금 바로 상담 신청하기
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-0.5 transition-transform">
-                <path d="M3 8H13M9.5 4.5L13 8L9.5 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9.5 4.5L13 8L9.5 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </a>
           </div>
         </FadeIn>

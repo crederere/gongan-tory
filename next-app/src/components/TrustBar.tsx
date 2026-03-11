@@ -33,17 +33,14 @@ const marqueeItems = [
 
 export default function TrustBar() {
   return (
-    <section className="relative py-20 md:py-28 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-n-50 to-n-50" />
-
+    <section className="relative py-16 md:py-20 bg-n-50 overflow-hidden">
       <div className="relative z-10 mx-auto max-w-6xl px-6">
-        {/* Stats */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="grid grid-cols-3 gap-6 sm:gap-12 justify-items-center mb-16"
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-3 gap-6 sm:gap-12 justify-items-center mb-12"
         >
           {[
             { value: 5.0, label: "당근마켓 평점", suffix: "", decimal: true },
@@ -52,29 +49,28 @@ export default function TrustBar() {
           ].map((s, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
               className="text-center"
             >
-              <div className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-n-900 tracking-tighter leading-none mb-3">
+              <div className="text-4xl md:text-5xl font-extrabold text-n-900 tracking-tighter leading-none mb-2">
                 <Counter target={s.value} decimal={s.decimal} />
-                {s.suffix && <span className="gradient-text">{s.suffix}</span>}
+                {s.suffix && <span className="text-n-400">{s.suffix}</span>}
               </div>
-              <p className="text-xs md:text-sm text-n-400 tracking-wide font-medium">{s.label}</p>
+              <p className="text-xs text-n-400 tracking-wide font-medium">{s.label}</p>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Marquee */}
-        <div className="relative overflow-hidden py-4">
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-n-50 to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-n-50 to-transparent z-10" />
-          <div className="flex gap-6 w-max animate-marquee">
+        <div className="relative overflow-hidden py-3">
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-n-50 to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-n-50 to-transparent z-10" />
+          <div className="flex gap-8 w-max animate-marquee">
             {[...marqueeItems, ...marqueeItems].map((item, i) => (
-              <span key={i} className="inline-flex items-center gap-2 text-xs text-n-400 whitespace-nowrap font-medium">
-                <span className="w-1 h-1 rounded-full bg-primary-400" />
+              <span key={i} className="inline-flex items-center gap-2 text-[11px] text-n-300 whitespace-nowrap font-medium tracking-wide">
+                <span className="w-1 h-1 rounded-full bg-n-300" />
                 {item}
               </span>
             ))}

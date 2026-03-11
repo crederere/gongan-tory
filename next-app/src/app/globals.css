@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Primary Blue ── */
   --color-primary-50: #EFF6FF;
   --color-primary-100: #DBEAFE;
   --color-primary-200: #BFDBFE;
@@ -13,7 +12,6 @@
   --color-primary-800: #1E40AF;
   --color-primary-900: #1E3A8A;
 
-  /* ── Neutrals (Slate) ── */
   --color-n-50: #F8FAFC;
   --color-n-100: #F1F5F9;
   --color-n-200: #E2E8F0;
@@ -26,11 +24,8 @@
   --color-n-900: #0F172A;
   --color-n-950: #020617;
 
-  /* ── Accent (Amber) ── */
   --color-amber-400: #FBBF24;
   --color-amber-500: #F59E0B;
-
-  /* ── Success (Emerald) ── */
   --color-emerald-400: #34D399;
   --color-emerald-500: #10B981;
 
@@ -51,112 +46,37 @@
     overflow-x: hidden;
   }
   ::selection {
-    background: var(--color-primary-200);
+    background: var(--color-primary-100);
     color: var(--color-n-900);
   }
 }
 
-/* ── Marquee ── */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 40s linear infinite;
 }
 
-/* ── Float ── */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
-}
-.animate-float { animation: float 6s ease-in-out infinite; }
-
-/* ── Subtle pulse ── */
-@keyframes subtle-pulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.05); }
-}
-.animate-subtle-pulse { animation: subtle-pulse 4s ease-in-out infinite; }
-
-/* ── Gradient text ── */
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-400));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-text-hero {
-  background: linear-gradient(135deg, var(--color-n-900) 0%, var(--color-primary-700) 40%, var(--color-primary-500) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ── Card hover lift ── */
 .card-hover {
-  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 .card-hover:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 25px 60px -12px rgba(37, 99, 235, 0.15), 0 8px 24px -8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px -10px rgba(0, 0, 0, 0.08);
 }
 
-/* ── Glass ── */
 .glass {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
 }
-
 .glass-strong {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(32px) saturate(200%);
-  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
 }
 
-/* ── Scrollbar ── */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* ── Gradient border ── */
-.gradient-border {
-  position: relative;
-}
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-200), var(--color-primary-400));
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  -webkit-mask-composite: xor;
-  pointer-events: none;
-}
-
-/* ── Dot grid pattern ── */
-.dot-grid {
-  background-image: radial-gradient(circle, var(--color-n-200) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-/* ── Button glow ── */
-.btn-glow {
-  box-shadow: 0 4px 16px -2px rgba(37, 99, 235, 0.3);
-  transition: all 0.3s ease;
-}
-.btn-glow:hover {
-  box-shadow: 0 8px 32px -4px rgba(37, 99, 235, 0.4), 0 0 0 1px rgba(37, 99, 235, 0.1);
-}
-
-/* ── Mesh gradient backgrounds ── */
-.mesh-gradient {
-  background:
-    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(59, 130, 246, 0.07), transparent),
-    radial-gradient(ellipse 60% 80% at 85% 75%, rgba(37, 99, 235, 0.05), transparent),
-    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(96, 165, 250, 0.03), transparent);
-}
