@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 페이지 - 공간토리</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans KR', sans-serif; background: #f5f7fa; color: #1a1a1a; min-height: 100vh; }
+
+    /* 로그인 */
+    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+    .login-box { background: #fff; border-radius: 16px; padding: 48px 36px; max-width: 400px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); text-align: center; }
+    .login-box h1 { font-size: 22px; margin-bottom: 8px; }
+    .login-box p { color: #888; font-size: 14px; margin-bottom: 28px; }
+    .login-box input { width: 100%; padding: 14px 16px; border: 1px solid #ddd; border-radius: 10px; font-size: 15px; margin-bottom: 16px; outline: none; }
+    .login-box input:focus { border-color: #1B64DA; }
+    .login-box button { width: 100%; padding: 14px; background: #1B64DA; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    .login-box button:hover { background: #1553b8; }
+    .login-error { color: #ef4444; font-size: 13px; margin-bottom: 12px; display: none; }
+
+    /* 대시보드 */
+    .dashboard { display: none; }
+    .dash-header { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .dash-header h1 { font-size: 18px; color: #1B64DA; }
+    .dash-header-right { display: flex; gap: 12px; align-items: center; }
+    .btn-logout { padding: 8px 16px; background: #f3f4f6; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; cursor: pointer; color: #666; }
+    .btn-logout:hover { background: #e5e7eb; }
+    .btn-danger { padding: 8px 16px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; font-size: 13px; cursor: pointer; color: #ef4444; }
+    .btn-danger:hover { background: #fee2e2; }
+
+    /* 탭 */
+    .dash-tabs { display: flex; gap: 0; background: #fff; border-bottom: 1px solid #e5e7eb; padding: 0 24px; }
+    .dash-tab { padding: 14px 24px; font-size: 14px; font-weight: 500; color: #888; border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; }
+    .dash-tab.active { color: #1B64DA; border-bottom-color: #1B64DA; }
+
+    /* 통계 */
+    .dash-stats { display: flex; gap: 16px; padding: 24px; flex-wrap: wrap; }
+    .stat-card { background: #fff; border-radius: 12px; padding: 20px 24px; flex: 1; min-width: 140px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .stat-card .stat-num { font-size: 28px; font-weight: 700; color: #1B64DA; }
+    .stat-card .stat-label { font-size: 13px; color: #888; margin-top: 4px; }
+
+    /* 카드 목록 */
+    .dash-content { padding: 0 24px 24px; }
+    .card-list { display: flex; flex-direction: column; gap: 16px; }
+    .card-item { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .card-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+    .card-name { font-size: 17px; font-weight: 600; }
+    .card-date { font-size: 12px; color: #999; }
+    .card-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-contact { background: #dbeafe; color: #1B64DA; }
+    .badge-survey { background: #dcfce7; color: #16a34a; }
+    .badge-payment { background: #fef3c7; color: #d97706; }
+    .card-row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 8px; }
+    .card-field { font-size: 13px; color: #666; }
+    .card-field strong { color: #333; font-weight: 500; }
+    .card-message { font-size: 14px; color: #444; background: #f9fafb; padding: 12px 16px; border-radius: 8px; margin-top: 12px; line-height: 1.6; }
+    .card-actions { display: flex; gap: 8px; margin-top: 16px; }
+    .btn-small { padding: 6px 14px; border-radius: 6px; font-size: 12px; border: 1px solid #ddd; background: #fff; cursor: pointer; color: #666; }
+    .btn-small:hover { background: #f3f4f6; }
+    .btn-small.delete { color: #ef4444; border-color: #fecaca; }
+    .btn-small.delete:hover { background: #fef2f2; }
+    .btn-small.payment-link { color: #1B64DA; border-color: #93c5fd; }
+
+    /* 설문 상세 */
+    .survey-detail { margin-top: 12px; }
+    .survey-section-title { font-size: 13px; font-weight: 600; color: #1B64DA; margin: 16px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #e5e7eb; }
+    .survey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .survey-field { font-size: 13px; color: #666; padding: 4px 0; }
+    .survey-field span { color: #333; font-weight: 500; }
+    .survey-full { grid-column: 1 / -1; }
+
+    .empty-state { text-align: center; padding: 60px 20px; color: #999; }
+    .empty-state p { font-size: 15px; }
+
+    /* 결제 관리 */
+    .payment-form { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 24px; }
+    .payment-form h3 { font-size: 16px; margin-bottom: 16px; }
+    .pf-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .pf-row input, .pf-row select { flex: 1; min-width: 140px; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; }
+    .pf-row input:focus, .pf-row select:focus { outline: none; border-color: #1B64DA; }
+    .btn-create-payment { padding: 12px 24px; background: #1B64DA; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .btn-create-payment:hover { background: #1553b8; }
+    .payment-status { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .status-pending { background: #fef3c7; color: #d97706; }
+    .status-paid { background: #dcfce7; color: #16a34a; }
+    .status-cancelled { background: #fee2e2; color: #ef4444; }
+    .payment-amount { font-size: 18px; font-weight: 700; color: #1B64DA; }
+
+    /* 결제 링크 복사 모달 */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; }
+    .modal-overlay.show { display: flex; }
+    .modal-box { background: #fff; border-radius: 16px; padding: 32px; max-width: 480px; width: 90%; }
+    .modal-box h3 { margin-bottom: 16px; }
+    .modal-link-box { background: #f3f4f6; padding: 12px; border-radius: 8px; font-size: 13px; word-break: break-all; margin-bottom: 16px; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    .modal-actions button { padding: 10px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; border: none; }
+    .btn-modal-copy { background: #1B64DA; color: #fff; font-weight: 600; }
+    .btn-modal-close { background: #f3f4f6; color: #666; }
+
+    @media (max-width: 600px) {
+      .dash-stats { flex-direction: column; }
+      .survey-grid { grid-template-columns: 1fr; }
+      .card-row { flex-direction: column; gap: 4px; }
+      .pf-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 로그인 화면 -->
+  <div class="login-wrap" id="loginScreen">
+    <div class="login-box">
+      <h1>공간토리 관리자</h1>
+      <p>비밀번호를 입력해주세요</p>
+      <p class="login-error" id="loginError">비밀번호가 틀렸습니다</p>
+      <input type="password" id="loginPw" placeholder="비밀번호" autofocus>
+      <button onclick="tryLogin()">로그인</button>
+    </div>
+  </div>
+
+  <!-- 대시보드 -->
+  <div class="dashboard" id="dashboard">
+    <div class="dash-header">
+      <h1>공간토리 관리자</h1>
+      <div class="dash-header-right">
+        <button class="btn-danger" onclick="clearAllData()">전체 데이터 삭제</button>
+        <button class="btn-logout" onclick="logout()">로그아웃</button>
+      </div>
+    </div>
+
+    <div class="dash-tabs">
+      <button class="dash-tab active" data-tab="all" onclick="switchTab('all')">전체</button>
+      <button class="dash-tab" data-tab="contacts" onclick="switchTab('contacts')">상담 신청</button>
+      <button class="dash-tab" data-tab="surveys" onclick="switchTab('surveys')">설문지</button>
+      <button class="dash-tab" data-tab="payments" onclick="switchTab('payments')">결제 관리</button>
+    </div>
+
+    <div class="dash-stats" id="dashStats"></div>
+
+    <div class="dash-content" id="dashContent"></div>
+  </div>
+
+  <!-- 결제 링크 모달 -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal-box">
+      <h3>결제 링크 생성 완료</h3>
+      <p style="font-size:14px;color:#666;margin-bottom:12px;">아래 링크를 고객에게 보내주세요:</p>
+      <div class="modal-link-box" id="paymentLinkBox"></div>
+      <div class="modal-actions">
+        <button class="btn-modal-close" onclick="closeModal()">닫기</button>
+        <button class="btn-modal-copy" onclick="copyPaymentLink()">링크 복사</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== 비밀번호 =====
+    const ADMIN_PW = 'gongtori2026';
+
+    function tryLogin() {
+      const pw = document.getElementById('loginPw').value;
+      if (pw === ADMIN_PW) {
+        sessionStorage.setItem('admin_logged_in', 'true');
+        showDashboard();
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+      }
+    }
+
+    document.getElementById('loginPw').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') tryLogin();
+    });
+
+    function logout() {
+      sessionStorage.removeItem('admin_logged_in');
+      location.reload();
+    }
+
+    function showDashboard() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      renderDashboard();
+    }
+
+    // 세션 체크
+    if (sessionStorage.getItem('admin_logged_in') === 'true') {
+      showDashboard();
+    }
+
+    // ===== 데이터 =====
+    function getContacts() { return JSON.parse(localStorage.getItem('gongantori_contacts') || '[]'); }
+    function getSurveys() { return JSON.parse(localStorage.getItem('gongantori_surveys') || '[]'); }
+    function getPayments() { return JSON.parse(localStorage.getItem('gongantori_payments') || '[]'); }
+
+    let currentTab = 'all';
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.dash-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+      renderDashboard();
+    }
+
+    function renderDashboard() {
+      const contacts = getContacts();
+      const surveys = getSurveys();
+      const payments = getPayments();
+
+      // 통계
+      const statsEl = document.getElementById('dashStats');
+      statsEl.innerHTML = `
+        <div class="stat-card"><div class="stat-num">${contacts.length + surveys.length}</div><div class="stat-label">총 신청 수</div></div>
+        <div class="stat-card"><div class="stat-num">${contacts.length}</div><div class="stat-label">상담 신청</div></div>
+        <div class="stat-card"><div class="stat-num">${surveys.length}</div><div class="stat-label">설문지</div></div>
+        <div class="stat-card"><div class="stat-num">${payments.filter(p => p.status === 'paid').length}/${payments.length}</div><div class="stat-label">결제 완료</div></div>
+      `;
+
+      const contentEl = document.getElementById('dashContent');
+      let html = '';
+
+      if (currentTab === 'payments') {
+        html += renderPaymentTab(payments);
+      } else {
+        let items = [];
+        if (currentTab === 'all' || currentTab === 'contacts') {
+          items = items.concat(contacts.map(c => ({...c, _type: 'contact'})));
+        }
+        if (currentTab === 'all' || currentTab === 'surveys') {
+          items = items.concat(surveys.map(s => ({...s, _type: 'survey'})));
+        }
+        items.sort((a, b) => b.id - a.id);
+
+        if (items.length === 0) {
+          html = '<div class="empty-state"><p>아직 신청 내역이 없습니다</p></div>';
+        } else {
+          html = '<div class="card-list">';
+          items.forEach(item => {
+            if (item._type === 'contact') {
+              html += renderContactCard(item);
+            } else {
+              html += renderSurveyCard(item);
+            }
+          });
+          html += '</div>';
+        }
+      }
+
+      contentEl.innerHTML = html;
+    }
+
+    function renderContactCard(c) {
+      return `
+        <div class="card-item">
+          <div class="card-item-header">
+            <div>
+              <span class="card-badge badge-contact">상담 신청</span>
+              <span class="card-name" style="margin-left:8px;">${esc(c.name)}</span>
+            </div>
+            <span class="card-date">${esc(c.date)}</span>
+          </div>
+          <div class="card-row">
+            <div class="card-field"><strong>연락처:</strong> ${esc(c.phone)}</div>
+            <div class="card-field"><strong>지역:</strong> ${esc(c.address || '-')}</div>
+          </div>
+          ${c.message ? `<div class="card-message">${esc(c.message)}</div>` : ''}
+          <div class="card-actions">
+            <button class="btn-small payment-link" onclick="createPaymentFor('${esc(c.name)}','${esc(c.phone)}')">결제 링크 생성</button>
+            <button class="btn-small delete" onclick="deleteContact(${c.id})">삭제</button>
+          </div>
+        </div>`;
+    }
+
+    function renderSurveyCard(s) {
+      return `
+        <div class="card-item">
+          <div class="card-item-header">
+            <div>
+              <span class="card-badge badge-survey">설문지</span>
+              <span class="card-name" style="margin-left:8px;">${esc(s.name)}</span>
+            </div>
+            <span class="card-date">${esc(s.date)}</span>
+          </div>
+          <div class="card-row">
+            <div class="card-field"><strong>연락처:</strong> ${esc(s.phone)}</div>
+            <div class="card-field"><strong>지역:</strong> ${esc(s.address || '-')}</div>
+            <div class="card-field"><strong>서비스:</strong> ${esc(s.service || '-')}</div>
+          </div>
+          <div class="survey-detail">
+            <div class="survey-section-title">기본 정보</div>
+            <div class="survey-grid">
+              <div class="survey-field">알게 된 경로: <span>${esc(s.howfound || '-')}</span></div>
+              <div class="survey-field">선택 이유: <span>${esc(s.whygongtori || '-')}</span></div>
+              <div class="survey-field">평수: <span>${esc(s.sqft || '-')}</span></div>
+              <div class="survey-field">방 개수: <span>${esc(s.rooms || '-')}</span></div>
+              <div class="survey-field">거주 인원: <span>${esc(s.residents || '-')}</span></div>
+              <div class="survey-field">정리 공간: <span>${esc((s.spaces||[]).join(', ') || '-')}</span></div>
+              <div class="survey-field survey-full">공간 용도: <span>${esc(s.spaceuse || '-')}</span></div>
+              <div class="survey-field">이전 이용: <span>${esc(s.prevexp || '-')}</span></div>
+            </div>
+            <div class="survey-section-title">생활 정보</div>
+            <div class="survey-grid">
+              <div class="survey-field">정리 이유: <span>${esc((s.whyorganize||[]).join(', ') || '-')}</span></div>
+              <div class="survey-field">집에 있는 시간: <span>${esc(s.hometime || '-')}</span></div>
+              <div class="survey-field">집에서 하는 일: <span>${esc(s.homeactivity || '-')}</span></div>
+              <div class="survey-field">직업: <span>${esc(s.job || '-')}</span></div>
+              <div class="survey-field">취미: <span>${esc(s.hobby || '-')}</span></div>
+              <div class="survey-field">관심사: <span>${esc(s.interest || '-')}</span></div>
+              <div class="survey-field">버리고 싶은 것: <span>${esc(s.wantdiscard || '-')}</span></div>
+              <div class="survey-field">소중한 것: <span>${esc(s.precious || '-')}</span></div>
+              <div class="survey-field survey-full">걱정/요청: <span>${esc(s.concern || '-')}</span></div>
+              <div class="survey-field survey-full">근본 원인: <span>${esc(s.rootcause || '-')}</span></div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-small payment-link" onclick="createPaymentFor('${esc(s.name)}','${esc(s.phone)}')">결제 링크 생성</button>
+            <button class="btn-small delete" onclick="deleteSurvey(${s.id})">삭제</button>
+          </div>
+        </div>`;
+    }
+
+    // ===== 결제 관리 =====
+    function renderPaymentTab(payments) {
+      let html = `
+        <div class="payment-form">
+          <h3>새 결제 링크 생성</h3>
+          <div class="pf-row">
+            <input type="text" id="payName" placeholder="고객 이름">
+            <input type="tel" id="payPhone" placeholder="연락처">
+          </div>
+          <div class="pf-row">
+            <select id="payService">
+              <option value="">서비스 선택</option>
+              <option value="반나절 정리컨설팅 (6시간)">반나절 정리 컨설팅 (6시간)</option>
+              <option value="종일 정리컨설팅 (8시간)">종일 정리 컨설팅 (8시간)</option>
+              <option value="커스텀">직접 입력</option>
+            </select>
+            <input type="number" id="payAmount" placeholder="금액 (원)">
+          </div>
+          <div class="pf-row">
+            <input type="text" id="payMemo" placeholder="메모 (선택)" style="flex:2;">
+          </div>
+          <button class="btn-create-payment" onclick="createPayment()">결제 링크 생성</button>
+        </div>`;
+
+      if (payments.length === 0) {
+        html += '<div class="empty-state"><p>생성된 결제 내역이 없습니다</p></div>';
+      } else {
+        html += '<div class="card-list">';
+        payments.sort((a, b) => b.id - a.id).forEach(p => {
+          const statusClass = p.status === 'paid' ? 'status-paid' : p.status === 'cancelled' ? 'status-cancelled' : 'status-pending';
+          const statusText = p.status === 'paid' ? '결제 완료' : p.status === 'cancelled' ? '취소' : '대기중';
+          html += `
+            <div class="card-item">
+              <div class="card-item-header">
+                <div>
+                  <span class="card-badge badge-payment">결제</span>
+                  <span class="card-name" style="margin-left:8px;">${esc(p.name)}</span>
+                  <span class="payment-status ${statusClass}" style="margin-left:8px;">${statusText}</span>
+                </div>
+                <span class="card-date">${esc(p.date)}</span>
+              </div>
+              <div class="card-row">
+                <div class="card-field"><strong>연락처:</strong> ${esc(p.phone)}</div>
+                <div class="card-field"><strong>서비스:</strong> ${esc(p.service)}</div>
+                <div class="card-field"><span class="payment-amount">${Number(p.amount).toLocaleString()}원</span></div>
+              </div>
+              ${p.memo ? `<div class="card-message">${esc(p.memo)}</div>` : ''}
+              <div class="card-actions">
+                ${p.status === 'pending' ? `
+                  <button class="btn-small" style="color:#16a34a;border-color:#86efac;" onclick="markPaid(${p.id})">결제 완료 처리</button>
+                  <button class="btn-small payment-link" onclick="showPaymentLink(${p.id})">결제 링크 보기</button>
+                  <button class="btn-small" style="color:#d97706;border-color:#fcd34d;" onclick="cancelPayment(${p.id})">취소</button>
+                ` : ''}
+                <button class="btn-small delete" onclick="deletePayment(${p.id})">삭제</button>
+              </div>
+            </div>`;
+        });
+        html += '</div>';
+      }
+      return html;
+    }
+
+    function createPaymentFor(name, phone) {
+      switchTab('payments');
+      setTimeout(() => {
+        document.getElementById('payName').value = name;
+        document.getElementById('payPhone').value = phone;
+        document.getElementById('payName').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+
+    function createPayment() {
+      const name = document.getElementById('payName').value.trim();
+      const phone = document.getElementById('payPhone').value.trim();
+      const service = document.getElementById('payService').value;
+      const amount = document.getElementById('payAmount').value;
+      const memo = document.getElementById('payMemo').value.trim();
+
+      if (!name || !amount) {
+        alert('고객 이름과 금액을 입력해주세요.');
+        return;
+      }
+
+      const payment = {
+        id: Date.now(),
+        date: new Date().toLocaleString('ko-KR'),
+        name, phone, service, amount, memo,
+        status: 'pending'
+      };
+
+      const payments = getPayments();
+      payments.unshift(payment);
+      localStorage.setItem('gongantori_payments', JSON.stringify(payments));
+
+      // 결제 링크 생성 & 모달 표시
+      showPaymentLink(payment.id);
+      renderDashboard();
+
+      // 폼 초기화
+      document.getElementById('payName').value = '';
+      document.getElementById('payPhone').value = '';
+      document.getElementById('payService').value = '';
+      document.getElementById('payAmount').value = '';
+      document.getElementById('payMemo').value = '';
+    }
+
+    function showPaymentLink(paymentId) {
+      const baseUrl = location.origin + location.pathname.replace('admin.html', 'payment.html');
+      const link = `${baseUrl}?pid=${paymentId}`;
+      document.getElementById('paymentLinkBox').textContent = link;
+      document.getElementById('paymentModal').classList.add('show');
+    }
+
+    function copyPaymentLink() {
+      const link = document.getElementById('paymentLinkBox').textContent;
+      navigator.clipboard.writeText(link).then(() => {
+        alert('링크가 복사되었습니다!');
+      });
+    }
+
+    function closeModal() {
+      document.getElementById('paymentModal').classList.remove('show');
+    }
+
+    function markPaid(id) {
+      const payments = getPayments();
+      const p = payments.find(p => p.id === id);
+      if (p) { p.status = 'paid'; p.paidDate = new Date().toLocaleString('ko-KR'); }
+      localStorage.setItem('gongantori_payments', JSON.stringify(payments));
+      renderDashboard();
+    }
+
+    function cancelPayment(id) {
+      const payments = getPayments();
+      const p = payments.find(p => p.id === id);
+      if (p) p.status = 'cancelled';
+      localStorage.setItem('gongantori_payments', JSON.stringify(payments));
+      renderDashboard();
+    }
+
+    // ===== 삭제 =====
+    function deleteContact(id) {
+      if (!confirm('이 상담 신청을 삭제할까요?')) return;
+      const items = getContacts().filter(c => c.id !== id);
+      localStorage.setItem('gongantori_contacts', JSON.stringify(items));
+      renderDashboard();
+    }
+
+    function deleteSurvey(id) {
+      if (!confirm('이 설문지를 삭제할까요?')) return;
+      const items = getSurveys().filter(s => s.id !== id);
+      localStorage.setItem('gongantori_surveys', JSON.stringify(items));
+      renderDashboard();
+    }
+
+    function deletePayment(id) {
+      if (!confirm('이 결제 내역을 삭제할까요?')) return;
+      const items = getPayments().filter(p => p.id !== id);
+      localStorage.setItem('gongantori_payments', JSON.stringify(items));
+      renderDashboard();
+    }
+
+    function clearAllData() {
+      if (!confirm('모든 신청/설문/결제 데이터를 삭제할까요?\n이 작업은 되돌릴 수 없습니다.')) return;
+      localStorage.removeItem('gongantori_contacts');
+      localStorage.removeItem('gongantori_surveys');
+      localStorage.removeItem('gongantori_payments');
+      renderDashboard();
+    }
+
+    // ===== 유틸 =====
+    function esc(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>

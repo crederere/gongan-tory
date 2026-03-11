@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>결제하기 - 공간토리</title>
+  <meta name="description" content="공간토리 정리 컨설팅 결제 페이지">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans KR', sans-serif; background: #f5f7fa; color: #1a1a1a; min-height: 100vh; }
+
+    .pay-wrap { max-width: 480px; margin: 0 auto; padding: 20px; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* 헤더 */
+    .pay-header { text-align: center; padding: 32px 0 24px; }
+    .pay-header .logo { font-size: 20px; font-weight: 700; color: #1B64DA; text-decoration: none; }
+    .pay-header p { font-size: 13px; color: #999; margin-top: 4px; }
+
+    /* 결제 정보 카드 */
+    .pay-card { background: #fff; border-radius: 16px; padding: 28px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 16px; }
+    .pay-card h2 { font-size: 18px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f0f0f0; }
+
+    .pay-info-row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 14px; }
+    .pay-info-row .label { color: #888; }
+    .pay-info-row .value { font-weight: 500; }
+    .pay-divider { border: none; border-top: 1px dashed #e5e7eb; margin: 16px 0; }
+    .pay-total { display: flex; justify-content: space-between; align-items: center; padding: 16px 0 0; }
+    .pay-total .label { font-size: 16px; font-weight: 600; }
+    .pay-total .amount { font-size: 24px; font-weight: 700; color: #1B64DA; }
+
+    /* 결제 수단 */
+    .pay-methods { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 16px; }
+    .pay-methods h3 { font-size: 15px; margin-bottom: 16px; }
+    .method-list { display: flex; flex-direction: column; gap: 10px; }
+    .method-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 2px solid #e5e7eb; border-radius: 12px; cursor: pointer; transition: all 0.2s; }
+    .method-item:hover { border-color: #93c5fd; }
+    .method-item.selected { border-color: #1B64DA; background: #eff6ff; }
+    .method-item input[type="radio"] { display: none; }
+    .method-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .method-icon.bank { background: #dbeafe; }
+    .method-icon.kakao { background: #fee500; }
+    .method-icon.toss { background: #0064ff; color: #fff; font-size: 12px; font-weight: 700; }
+    .method-name { font-size: 14px; font-weight: 500; }
+    .method-desc { font-size: 12px; color: #999; }
+
+    /* 계좌이체 상세 */
+    .bank-detail { display: none; background: #f9fafb; border-radius: 12px; padding: 20px; margin-top: 16px; }
+    .bank-detail.show { display: block; }
+    .bank-info { font-size: 15px; line-height: 1.8; }
+    .bank-info strong { color: #1B64DA; }
+    .bank-copy-btn { margin-top: 12px; padding: 10px 20px; background: #1B64DA; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; }
+    .bank-copy-btn:hover { background: #1553b8; }
+
+    /* 결제 버튼 */
+    .pay-submit { width: 100%; padding: 16px; background: #1B64DA; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+    .pay-submit:hover { background: #1553b8; }
+    .pay-submit:disabled { background: #ccc; cursor: not-allowed; }
+
+    /* 완료 */
+    .pay-done { display: none; text-align: center; padding: 60px 20px; }
+    .pay-done.show { display: block; }
+    .pay-done-icon { font-size: 48px; margin-bottom: 16px; }
+    .pay-done h2 { font-size: 20px; margin-bottom: 8px; }
+    .pay-done p { color: #888; font-size: 14px; line-height: 1.6; }
+    .pay-done .back-link { display: inline-block; margin-top: 24px; color: #1B64DA; font-weight: 500; text-decoration: none; }
+
+    /* 만료/없음 */
+    .pay-error { text-align: center; padding: 80px 20px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .pay-error h2 { font-size: 20px; margin-bottom: 8px; }
+    .pay-error p { color: #888; font-size: 14px; }
+    .pay-error a { color: #1B64DA; margin-top: 20px; text-decoration: none; font-weight: 500; }
+
+    .pay-notice { font-size: 12px; color: #999; text-align: center; padding: 16px 0 32px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+  <div class="pay-wrap">
+    <div class="pay-header">
+      <a href="index.html" class="logo">공간토리</a>
+      <p>정리 컨설팅 결제</p>
+    </div>
+
+    <!-- 결제 정보 없음 -->
+    <div class="pay-error" id="payError" style="display:none;">
+      <h2>결제 정보를 찾을 수 없습니다</h2>
+      <p>링크가 올바르지 않거나 만료되었을 수 있습니다.</p>
+      <a href="index.html">홈으로 돌아가기</a>
+    </div>
+
+    <!-- 결제 폼 -->
+    <div id="payContent" style="display:none;">
+      <div class="pay-card">
+        <h2>결제 정보</h2>
+        <div class="pay-info-row">
+          <span class="label">고객명</span>
+          <span class="value" id="pName"></span>
+        </div>
+        <div class="pay-info-row">
+          <span class="label">서비스</span>
+          <span class="value" id="pService"></span>
+        </div>
+        <div class="pay-info-row" id="pMemoRow" style="display:none;">
+          <span class="label">메모</span>
+          <span class="value" id="pMemo"></span>
+        </div>
+        <hr class="pay-divider">
+        <div class="pay-total">
+          <span class="label">결제 금액</span>
+          <span class="amount" id="pAmount"></span>
+        </div>
+      </div>
+
+      <div class="pay-methods">
+        <h3>결제 수단</h3>
+        <div class="method-list">
+          <label class="method-item selected" onclick="selectMethod('bank')">
+            <input type="radio" name="method" value="bank" checked>
+            <div class="method-icon bank">🏦</div>
+            <div>
+              <div class="method-name">계좌이체</div>
+              <div class="method-desc">계좌번호로 직접 입금</div>
+            </div>
+          </label>
+          <label class="method-item" onclick="selectMethod('kakao')">
+            <input type="radio" name="method" value="kakao">
+            <div class="method-icon kakao">K</div>
+            <div>
+              <div class="method-name">카카오페이</div>
+              <div class="method-desc">카카오페이로 간편 결제</div>
+            </div>
+          </label>
+          <label class="method-item" onclick="selectMethod('toss')">
+            <input type="radio" name="method" value="toss">
+            <div class="method-icon toss">T</div>
+            <div>
+              <div class="method-name">토스</div>
+              <div class="method-desc">토스로 간편 송금</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="bank-detail show" id="bankDetail">
+          <div class="bank-info">
+            <strong>카카오뱅크</strong><br>
+            계좌번호: <strong>3333-00-0000000</strong><br>
+            예금주: <strong>공간토리</strong>
+          </div>
+          <button class="bank-copy-btn" onclick="copyAccount()">계좌번호 복사하기</button>
+        </div>
+      </div>
+
+      <button class="pay-submit" id="payBtn" onclick="submitPayment()">결제 완료 알리기</button>
+
+      <p class="pay-notice">
+        결제 후 '결제 완료 알리기' 버튼을 눌러주시면<br>
+        확인 후 빠르게 연락드리겠습니다.
+      </p>
+    </div>
+
+    <!-- 결제 완료 -->
+    <div class="pay-done" id="payDone">
+      <div class="pay-done-icon">✅</div>
+      <h2>결제가 확인되었습니다!</h2>
+      <p>빠른 시간 내에 연락드리겠습니다.<br>감사합니다 :)</p>
+      <a href="index.html" class="back-link">홈으로 돌아가기</a>
+    </div>
+  </div>
+
+  <script>
+    let currentPayment = null;
+
+    function init() {
+      const params = new URLSearchParams(location.search);
+      const pid = params.get('pid');
+
+      if (!pid) {
+        document.getElementById('payError').style.display = 'flex';
+        return;
+      }
+
+      const payments = JSON.parse(localStorage.getItem('gongantori_payments') || '[]');
+      currentPayment = payments.find(p => String(p.id) === pid);
+
+      if (!currentPayment) {
+        document.getElementById('payError').style.display = 'flex';
+        return;
+      }
+
+      if (currentPayment.status === 'paid') {
+        document.getElementById('payDone').classList.add('show');
+        return;
+      }
+
+      if (currentPayment.status === 'cancelled') {
+        document.getElementById('payError').style.display = 'flex';
+        document.querySelector('.pay-error h2').textContent = '취소된 결제입니다';
+        document.querySelector('.pay-error p').textContent = '이 결제는 취소 처리되었습니다.';
+        return;
+      }
+
+      // 결제 정보 표시
+      document.getElementById('pName').textContent = currentPayment.name;
+      document.getElementById('pService').textContent = currentPayment.service || '정리 컨설팅';
+      document.getElementById('pAmount').textContent = Number(currentPayment.amount).toLocaleString() + '원';
+
+      if (currentPayment.memo) {
+        document.getElementById('pMemo').textContent = currentPayment.memo;
+        document.getElementById('pMemoRow').style.display = 'flex';
+      }
+
+      document.getElementById('payContent').style.display = 'block';
+    }
+
+    function selectMethod(method) {
+      document.querySelectorAll('.method-item').forEach(el => el.classList.remove('selected'));
+      document.querySelector(`input[value="${method}"]`).closest('.method-item').classList.add('selected');
+      document.getElementById('bankDetail').classList.toggle('show', method === 'bank');
+    }
+
+    function copyAccount() {
+      navigator.clipboard.writeText('3333-00-0000000').then(() => {
+        alert('계좌번호가 복사되었습니다!');
+      });
+    }
+
+    function submitPayment() {
+      if (!currentPayment) return;
+
+      const method = document.querySelector('input[name="method"]:checked').value;
+      const methodNames = { bank: '계좌이체', kakao: '카카오페이', toss: '토스' };
+
+      if (method === 'kakao' || method === 'toss') {
+        alert(`${methodNames[method]} 결제는 준비 중입니다.\n계좌이체로 결제해주시면 빠르게 확인해드릴게요!`);
+        return;
+      }
+
+      if (!confirm(`입금을 완료하셨나요?\n\n금액: ${Number(currentPayment.amount).toLocaleString()}원\n계좌: 카카오뱅크 3333-00-0000000\n\n입금 완료 확인을 누르시면 공간토리에서 확인 후 연락드립니다.`)) return;
+
+      // localStorage에 결제 상태 업데이트
+      const payments = JSON.parse(localStorage.getItem('gongantori_payments') || '[]');
+      const p = payments.find(p => p.id === currentPayment.id);
+      if (p) {
+        p.status = 'paid';
+        p.paidDate = new Date().toLocaleString('ko-KR');
+        p.paymentMethod = method;
+      }
+      localStorage.setItem('gongantori_payments', JSON.stringify(payments));
+
+      document.getElementById('payContent').style.display = 'none';
+      document.getElementById('payDone').classList.add('show');
+    }
+
+    init();
+  </script>
+</body>
+</html>
