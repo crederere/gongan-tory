@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "공간토리 — 오래 유지되는 맞춤 정리",
   description:
     "다시 어질러지지 않는 요요 없는 정리! 서울 여성 전문 집정리·수납 컨설팅 공간토리입니다.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

@@ -14,7 +14,7 @@ export default function Hero() {
     <section ref={ref} className="relative min-h-[100svh] flex items-center bg-white">
       <motion.div style={{ y, opacity: op }} className="relative z-10 mx-auto max-w-6xl px-6 pt-32 pb-24 w-full">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
-          <span className="inline-flex items-center gap-2 text-[11px] text-n-400 tracking-wide font-medium mb-10">
+          <span className="inline-flex items-center gap-2 text-xs text-n-400 tracking-wide font-medium mb-10">
             <span className="w-1.5 h-1.5 rounded-full bg-primary-500" />
             3월 예약 마감 임박 · 잔여 8건
           </span>
@@ -33,7 +33,13 @@ export default function Hero() {
         </motion.h1>
 
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }}
-          className="text-n-500 text-base md:text-lg leading-relaxed max-w-md mb-12">
+          className="text-n-500 text-base md:text-lg leading-relaxed max-w-lg mb-6">
+          &ldquo;어디서부터 시작해야 할지 모르겠어요&rdquo;<br />
+          그 마음, 저희가 제일 잘 알아요.
+        </motion.p>
+
+        <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
+          className="text-n-400 text-sm md:text-base leading-relaxed max-w-md mb-12">
           보여주기식 칼각 정리가 아닌,{" "}
           <span className="text-n-700 font-medium">생활 패턴에 맞는 맞춤 정리</span>로
           다시 어질러지지 않는 공간을 만들어드립니다.
@@ -42,14 +48,14 @@ export default function Hero() {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.35 }}
           className="flex flex-wrap gap-3 mb-20">
           <a href="#contact"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-n-900 text-white text-sm font-semibold hover:bg-n-800 transition-colors active:scale-[0.98]">
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-n-900 text-white text-[15px] font-semibold hover:bg-n-800 transition-colors active:scale-[0.98]">
             무료 상담 신청하기
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
               <path d="M3 8H13M9.5 4.5L13 8L9.5 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </a>
           <a href={KAKAO_LINK} target="_blank" rel="noopener"
-            className="px-7 py-3.5 rounded-full border border-n-200 text-n-600 text-sm font-medium hover:border-n-300 hover:bg-n-50 transition-all active:scale-[0.98]">
+            className="px-8 py-4 rounded-full border border-n-200 text-n-600 text-[15px] font-medium hover:border-n-300 hover:bg-n-50 transition-all active:scale-[0.98]">
             카카오톡 문의
           </a>
         </motion.div>
@@ -63,8 +69,8 @@ export default function Hero() {
             { n: "전국 1위", label: "당근 정리 검색" },
           ].map((s) => (
             <div key={s.label}>
-              <p className="text-2xl font-bold text-n-900 tracking-tight">{s.n}</p>
-              <p className="text-[11px] text-n-400 mt-1">{s.label}</p>
+              <p className="text-2xl md:text-3xl font-bold text-n-900 tracking-tight">{s.n}</p>
+              <p className="text-xs text-n-400 mt-1">{s.label}</p>
             </div>
           ))}
         </motion.div>

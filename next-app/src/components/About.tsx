@@ -1,21 +1,21 @@
 "use client";
 
+import { motion } from "framer-motion";
 import FadeIn from "./FadeIn";
 import Image from "next/image";
 import { YOUTUBE_LINK, INSTAGRAM_LINK, BLOG_LINK, THREADS_LINK } from "@/lib/data";
 
 const channels = [
-  { href: YOUTUBE_LINK, label: "유튜브" },
-  { href: INSTAGRAM_LINK, label: "인스타그램" },
-  { href: BLOG_LINK, label: "블로그" },
-  { href: THREADS_LINK, label: "쓰레드" },
+  { href: YOUTUBE_LINK, label: "YouTube", icon: "▶" },
+  { href: INSTAGRAM_LINK, label: "Instagram", icon: "◎" },
+  { href: BLOG_LINK, label: "Blog", icon: "✎" },
+  { href: THREADS_LINK, label: "Threads", icon: "@" },
 ];
 
-const credentials = [
-  "전직 간호사 출신 정리 전문가",
-  "10가구 무료 정리로 커리어 시작",
-  "당근마켓 정리 검색 전국 1위",
-  "누적 고객 257명 이상",
+const stats = [
+  { value: "257+", label: "누적 고객" },
+  { value: "5.0", label: "당근 평점" },
+  { value: "1위", label: "전국 검색" },
 ];
 
 export default function About() {
@@ -23,53 +23,70 @@ export default function About() {
     <section id="about" className="relative py-24 md:py-36 bg-n-50 overflow-hidden">
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-12 md:gap-16 items-center">
+            {/* Left: Photo */}
             <div className="flex justify-center md:justify-start">
-              <div className="relative">
-                <div className="w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden ring-1 ring-n-200/50">
-                  <Image src="/images/profile/tory.jpg" alt="토리쌤 프로필" width={288} height={288} className="w-full h-full object-cover" />
+              <motion.div
+                className="relative"
+                whileHover={{ y: -4 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              >
+                <div className="w-64 h-64 md:w-80 md:h-80 rounded-3xl overflow-hidden ring-1 ring-n-200/50 shadow-xl shadow-n-900/[0.06]">
+                  <Image src="/images/profile/tory.jpg" alt="토리쌤 프로필" width={320} height={320} className="w-full h-full object-cover" />
                 </div>
-                <div className="absolute -bottom-3 -right-3 bg-white rounded-xl px-4 py-2.5 shadow-lg shadow-n-900/[0.06] border border-n-100">
-                  <p className="text-[10px] text-n-400 font-medium">당근마켓 평점</p>
-                  <p className="text-lg font-bold text-n-900">5.0 <span className="text-amber-400">★</span></p>
+
+                {/* Floating stats card */}
+                <div className="absolute -bottom-4 -right-4 md:-right-8 bg-white rounded-2xl p-4 shadow-xl shadow-n-900/[0.08] border border-n-100">
+                  <div className="flex gap-5">
+                    {stats.map((s) => (
+                      <div key={s.label} className="text-center">
+                        <p className="text-lg font-bold text-n-900 leading-none">{s.value}</p>
+                        <p className="text-[10px] text-n-400 mt-1">{s.label}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+
+                {/* Badge */}
+                <div className="absolute -top-3 -left-3 bg-primary-500 text-white rounded-xl px-3 py-1.5 shadow-lg">
+                  <p className="text-[11px] font-bold">전직 간호사 출신</p>
+                </div>
+              </motion.div>
             </div>
 
+            {/* Right: Content */}
             <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-n-400 font-medium mb-6">About</p>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-n-900 mb-6 leading-snug tracking-tight">
+              <p className="text-xs uppercase tracking-[0.2em] text-n-400 font-medium mb-4">About</p>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-n-900 mb-3 leading-snug tracking-tight">
                 안녕하세요,<br />토리쌤이에요
               </h2>
-              <p className="text-n-500 leading-relaxed mb-6 text-[15px]">
-                간호사를 그만두고, 무작정 10가구를 무료로 정리해주면서 이 일을 시작했어요.
+              <p className="text-primary-500 text-sm font-medium mb-6">정리 전문가 · 공간토리 대표</p>
+
+              <p className="text-n-600 leading-relaxed mb-6 text-base">
+                간호사를 그만두고, <span className="text-n-800 font-semibold">무작정 10가구를 무료로 정리</span>해주면서 이 일을 시작했어요.
+                그때 알게 됐어요 — 정리 못 하는 건 게으른 게 아니라,
+                <span className="text-n-800 font-semibold"> 방법을 몰랐던 거</span>라는 걸.
               </p>
 
-              <blockquote className="border-l-2 border-n-200 pl-5 mb-8 py-1">
-                <p className="text-n-600 leading-relaxed italic text-[15px]">
-                  &ldquo;정리를 못 하는 이유는 물건이 많아서가 아니었어요.<br />
-                  심리적인 문제, 습관, 그 사람의 삶 때문이었어요.&rdquo;
+              <blockquote className="relative pl-5 mb-8 py-2">
+                <div className="absolute left-0 top-0 bottom-0 w-[3px] rounded-full bg-primary-400" />
+                <p className="text-n-700 leading-relaxed text-base italic">
+                  &ldquo;정리를 못 하는 이유는 물건이 많아서가 아니에요.<br />
+                  심리적인 문제, 습관, 그 사람의 삶 때문이에요.&rdquo;
                 </p>
               </blockquote>
 
-              <p className="text-n-600 font-medium leading-relaxed mb-8 text-[15px]">
+              <p className="text-n-800 font-semibold leading-relaxed mb-8 text-lg">
                 정리는 물건을 치우는 게 아니라,<br />
                 그 사람의 일상을 찾아가는 과정이에요.
               </p>
 
-              <div className="space-y-2 mb-8">
-                {credentials.map((c, i) => (
-                  <div key={i} className="flex items-center gap-3 text-sm text-n-600">
-                    <span className="w-1 h-1 rounded-full bg-n-300 flex-shrink-0" />
-                    {c}
-                  </div>
-                ))}
-              </div>
-
+              {/* Channel links */}
               <div className="flex flex-wrap gap-2">
                 {channels.map((ch) => (
                   <a key={ch.label} href={ch.href} target="_blank" rel="noopener"
-                    className="text-xs px-4 py-2 rounded-full border border-n-200 text-n-500 hover:text-n-700 hover:border-n-300 transition-all">
+                    className="group inline-flex items-center gap-2 text-[13px] px-4 py-2.5 rounded-full bg-white border border-n-200 text-n-500 hover:text-n-800 hover:border-n-300 hover:shadow-sm transition-all">
+                    <span className="text-xs opacity-50 group-hover:opacity-100 transition-opacity">{ch.icon}</span>
                     {ch.label}
                   </a>
                 ))}

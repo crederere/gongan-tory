@@ -59,7 +59,7 @@ export default function TrustBar() {
                 <Counter target={s.value} decimal={s.decimal} />
                 {s.suffix && <span className="text-n-400">{s.suffix}</span>}
               </div>
-              <p className="text-xs text-n-400 tracking-wide font-medium">{s.label}</p>
+              <p className="text-[13px] text-n-400 tracking-wide font-medium">{s.label}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -69,7 +69,7 @@ export default function TrustBar() {
           <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-n-50 to-transparent z-10" />
           <div className="flex gap-8 w-max animate-marquee">
             {[...marqueeItems, ...marqueeItems].map((item, i) => (
-              <span key={i} className="inline-flex items-center gap-2 text-[11px] text-n-300 whitespace-nowrap font-medium tracking-wide">
+              <span key={i} className="inline-flex items-center gap-2 text-xs text-n-300 whitespace-nowrap font-medium tracking-wide">
                 <span className="w-1 h-1 rounded-full bg-n-300" />
                 {item}
               </span>

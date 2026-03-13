@@ -1,9 +1,10 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import TrustBar from "@/components/TrustBar";
 import PainSection from "@/components/PainSection";
+import SpaceSelector from "@/components/SpaceSelector";
 import BeforeAfter from "@/components/BeforeAfter";
 import Reviews from "@/components/Reviews";
+import VideoReviews from "@/components/VideoReviews";
 import Comparison from "@/components/Comparison";
 import About from "@/components/About";
 import Process from "@/components/Process";
@@ -20,14 +21,15 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <TrustBar />
         <PainSection />
+        <SpaceSelector />
         <BeforeAfter />
-        <Reviews />
         <Comparison />
         <About />
         <Process />
         <Pricing />
+        <Reviews />
+        <VideoReviews />
         <FAQ />
         <Contact />
         <CTABanner />

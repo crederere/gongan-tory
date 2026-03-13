@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,25 +25,32 @@ export default function Navbar() {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       scrolled ? "glass-strong border-b border-n-100 shadow-[0_1px_12px_-4px_rgba(0,0,0,0.05)]" : "bg-transparent"
     }`}>
-      <div className="mx-auto max-w-6xl flex items-center justify-between px-6 h-16">
-        <a href="#" className="flex items-center gap-2">
-          <span className="w-1.5 h-5 rounded-full bg-primary-600" />
-          <span className="text-[17px] font-bold tracking-tight text-n-900">공간토리</span>
+      <div className={`mx-auto max-w-6xl flex items-center justify-between px-6 transition-all duration-500 ${
+        scrolled ? "h-16" : "h-20"
+      }`}>
+        <a href="#" className="flex items-center">
+          <Image
+            src="/images/logo.png"
+            alt="공간토리"
+            width={240}
+            height={98}
+            className={`w-auto transition-all duration-500 ${scrolled ? "h-9" : "h-12"}`}
+          />
         </a>
 
         <div className="hidden md:flex items-center gap-1">
           {links.map((l) => (
             <a key={l.href} href={l.href}
-              className="text-[13px] text-n-500 hover:text-n-900 transition-colors px-4 py-2 rounded-lg">
+              className="text-sm text-n-500 hover:text-n-900 transition-colors px-4 py-2 rounded-lg">
               {l.label}
             </a>
           ))}
           <a href="/survey"
-            className="text-[13px] text-n-500 hover:text-n-900 transition-colors px-4 py-2 rounded-lg">
+            className="text-sm text-n-500 hover:text-n-900 transition-colors px-4 py-2 rounded-lg">
             설문지
           </a>
           <a href="#contact"
-            className="ml-3 text-[13px] font-semibold px-5 py-2 rounded-full bg-n-900 text-white hover:bg-n-800 transition-colors">
+            className="ml-3 text-sm font-semibold px-5 py-2.5 rounded-full bg-n-900 text-white hover:bg-n-800 transition-colors">
             상담 신청
           </a>
         </div>
@@ -66,13 +74,13 @@ export default function Navbar() {
             <div className="px-6 py-5 flex flex-col gap-1">
               {links.map((l) => (
                 <a key={l.href} href={l.href} onClick={() => setOpen(false)}
-                  className="text-[15px] text-n-700 hover:text-n-900 transition-colors px-3 py-2.5 rounded-lg">
+                  className="text-base text-n-700 hover:text-n-900 transition-colors px-3 py-2.5 rounded-lg">
                   {l.label}
                 </a>
               ))}
-              <a href="/survey" onClick={() => setOpen(false)} className="text-[15px] text-n-700 px-3 py-2.5 rounded-lg">설문지</a>
+              <a href="/survey" onClick={() => setOpen(false)} className="text-base text-n-700 px-3 py-2.5 rounded-lg">설문지</a>
               <a href="#contact" onClick={() => setOpen(false)}
-                className="mt-2 text-center text-[13px] font-semibold px-5 py-3 rounded-full bg-n-900 text-white">
+                className="mt-2 text-center text-sm font-semibold px-5 py-3 rounded-full bg-n-900 text-white">
                 상담 신청
               </a>
             </div>

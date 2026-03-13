@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import FadeIn from "@/components/FadeIn";
 
 export default function SurveyPage() {
@@ -49,27 +50,27 @@ export default function SurveyPage() {
   };
 
   const inputClass =
-    "w-full px-4 py-3 rounded-xl bg-white border border-warm-200/60 text-sm text-warm-800 placeholder:text-warm-300 focus:outline-none focus:border-warm-400 transition-colors";
-  const labelClass = "block text-xs text-warm-500 mb-2";
+    "w-full px-4 py-3 rounded-xl bg-white border border-n-200 text-sm text-n-800 placeholder:text-n-300 focus:outline-none focus:border-n-400 transition-colors";
+  const labelClass = "block text-xs text-n-500 mb-2 font-medium";
   const checkClass =
-    "flex items-center gap-2 text-sm text-warm-600 cursor-pointer select-none";
+    "flex items-center gap-2.5 text-sm text-n-600 cursor-pointer select-none";
 
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-6">
+      <div className="min-h-screen flex items-center justify-center px-6 bg-white">
         <div className="text-center max-w-md">
-          <div className="text-5xl mb-6">✨</div>
-          <h1 className="text-2xl font-bold text-warm-900 mb-4">
+          <div className="w-12 h-12 rounded-full bg-n-900 text-white flex items-center justify-center mx-auto mb-6 text-xl">✓</div>
+          <h1 className="text-2xl font-bold text-n-900 mb-4">
             설문지가 제출되었습니다!
           </h1>
-          <p className="text-warm-500 mb-8 leading-relaxed">
+          <p className="text-n-500 mb-8 leading-relaxed">
             작성해주신 내용을 바탕으로 더 정확한 맞춤 상담을 해드릴게요.
             <br />
             빠른 시간 내에 연락드리겠습니다 :)
           </p>
           <a
             href="/"
-            className="inline-block px-6 py-3 rounded-full bg-warm-900 text-warm-50 text-sm font-medium hover:bg-warm-800 transition-all"
+            className="inline-block px-6 py-3 rounded-full bg-n-900 text-white text-sm font-medium hover:bg-n-800 transition-colors"
           >
             홈으로 돌아가기
           </a>
@@ -79,33 +80,33 @@ export default function SurveyPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 bg-warm-50/80 backdrop-blur-xl border-b border-warm-200/40">
-        <div className="mx-auto max-w-3xl flex items-center justify-between px-6 h-14">
-          <a href="/" className="text-lg font-bold text-warm-900 tracking-tight">
-            공간토리
+      <nav className="sticky top-0 z-50 glass-strong border-b border-n-100">
+        <div className="mx-auto max-w-3xl flex items-center justify-between px-6 h-16">
+          <a href="/" className="flex items-center">
+            <Image src="/images/logo.png" alt="공간토리" width={200} height={82} className="h-14 w-auto translate-y-[10px]" />
           </a>
-          <a href="/" className="text-sm text-warm-500 hover:text-warm-700 transition-colors">
+          <a href="/" className="text-sm text-n-500 hover:text-n-800 transition-colors">
             메인으로
           </a>
         </div>
       </nav>
 
       {/* Hero */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 bg-n-50">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <FadeIn>
-            <p className="text-xs text-warm-400 uppercase tracking-widest mb-4">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-n-400 font-medium mb-6">
               맞춤 정리 설문지
             </p>
-            <h1 className="text-3xl md:text-4xl font-bold text-warm-900 leading-snug mb-6">
+            <h1 className="text-3xl md:text-[2.75rem] font-extrabold text-n-900 leading-[1.15] tracking-tight mb-5">
               진짜 정리는
               <br />
-              <span className="text-accent-dark">&lsquo;나&rsquo;를 아는 것</span>에서
+              <span className="text-primary-600">&lsquo;나&rsquo;를 아는 것</span>에서
               시작돼요
             </h1>
-            <p className="text-warm-500 leading-relaxed">
+            <p className="text-n-500 leading-relaxed">
               이 설문지를 작성해주시면, 공간토리가 당신에게 딱 맞는 정리를
               해드릴 수 있어요.
             </p>
@@ -113,31 +114,31 @@ export default function SurveyPage() {
         </div>
       </section>
 
-      {/* Why section - condensed */}
-      <section className="pb-16 md:pb-20">
+      {/* Why section */}
+      <section className="py-16 md:py-20">
         <div className="mx-auto max-w-2xl px-6">
           <FadeIn>
             <div className="space-y-8 text-center">
               <div>
-                <h2 className="text-xl font-bold text-warm-800 mb-4 leading-snug">
+                <h2 className="text-xl font-bold text-n-800 mb-4 leading-snug">
                   정리를 맡기는 분들에게서 발견한 공통점이 있어요
                 </h2>
-                <div className="space-y-2 text-sm text-warm-500 leading-relaxed">
+                <div className="space-y-2 text-sm text-n-500 leading-relaxed">
                   <p>바쁘다. 물건이 어디 있는지 모른다. 혼자서는 엄두가 안 난다.</p>
                   <p>이전에도 정리 서비스를 받았지만, 금방 원래대로 돌아갔다.</p>
                 </div>
               </div>
-              <div className="p-6 rounded-2xl bg-warm-100/50 border border-warm-200/40">
-                <p className="text-sm text-warm-600 leading-relaxed">
+              <div className="p-6 rounded-2xl border border-n-100">
+                <p className="text-sm text-n-600 leading-relaxed">
                   근본적인 원인이 해결되지 않은 채 표면적인 정리만 이루어진다면,
                   <br />
-                  <strong className="text-warm-800">
+                  <strong className="text-n-800">
                     장기적인 변화를 기대할 수 없습니다.
                   </strong>
                 </p>
               </div>
               <div>
-                <p className="text-sm text-warm-500 leading-relaxed">
+                <p className="text-sm text-n-500 leading-relaxed">
                   모든 변화의 시작은 &lsquo;나&rsquo;를 아는 것이에요.
                   <br />
                   그래서 이 설문지를 만들었습니다.
@@ -152,14 +153,14 @@ export default function SurveyPage() {
       <section className="pb-20 md:pb-28">
         <div className="mx-auto max-w-2xl px-6">
           <FadeIn>
-            <form onSubmit={handleSubmit} className="space-y-10">
+            <form onSubmit={handleSubmit} className="space-y-12">
               {/* Section 1 */}
-              <div className="space-y-4">
+              <div className="space-y-5">
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="w-8 h-8 rounded-full bg-warm-900 text-warm-50 text-xs font-semibold flex items-center justify-center">
+                  <span className="w-8 h-8 rounded-full bg-n-900 text-white text-xs font-semibold flex items-center justify-center">
                     1
                   </span>
-                  <h3 className="text-lg font-bold text-warm-800">기본 정보</h3>
+                  <h3 className="text-lg font-bold text-n-800">기본 정보</h3>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -194,14 +195,14 @@ export default function SurveyPage() {
               </div>
 
               {/* Section 2 */}
-              <div className="space-y-4">
+              <div className="space-y-5">
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="w-8 h-8 rounded-full bg-warm-900 text-warm-50 text-xs font-semibold flex items-center justify-center">
+                  <span className="w-8 h-8 rounded-full bg-n-900 text-white text-xs font-semibold flex items-center justify-center">
                     2
                   </span>
                   <div>
-                    <h3 className="text-lg font-bold text-warm-800">공간에 대해 알려주세요</h3>
-                    <p className="text-xs text-warm-400">정확한 견적과 맞춤 정리를 위해 필요해요</p>
+                    <h3 className="text-lg font-bold text-n-800">공간에 대해 알려주세요</h3>
+                    <p className="text-xs text-n-400">정확한 견적과 맞춤 정리를 위해 필요해요</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -220,10 +221,10 @@ export default function SurveyPage() {
                 </div>
                 <div>
                   <label className={labelClass}>정리하고 싶은 공간</label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                     {["거실", "주방", "침실", "옷방/드레스룸", "아이방/놀이방", "서재/작업실", "현관", "화장실", "팬트리/창고", "전체"].map((s) => (
                       <label key={s} className={checkClass}>
-                        <input type="checkbox" name="spaces" value={s} className="rounded border-warm-300 text-warm-700 focus:ring-warm-400" />
+                        <input type="checkbox" name="spaces" value={s} className="rounded border-n-300 text-n-700 focus:ring-n-400 accent-n-900" />
                         {s}
                       </label>
                     ))}
@@ -254,19 +255,19 @@ export default function SurveyPage() {
               </div>
 
               {/* Section 3 */}
-              <div className="space-y-4">
+              <div className="space-y-5">
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="w-8 h-8 rounded-full bg-warm-900 text-warm-50 text-xs font-semibold flex items-center justify-center">
+                  <span className="w-8 h-8 rounded-full bg-n-900 text-white text-xs font-semibold flex items-center justify-center">
                     3
                   </span>
                   <div>
-                    <h3 className="text-lg font-bold text-warm-800">당신의 생활에 대해 알려주세요</h3>
-                    <p className="text-xs text-warm-400">생활 패턴에 맞춰야 오래 유지되는 진짜 정리가 가능해요</p>
+                    <h3 className="text-lg font-bold text-n-800">당신의 생활에 대해 알려주세요</h3>
+                    <p className="text-xs text-n-400">생활 패턴에 맞춰야 오래 유지되는 진짜 정리가 가능해요</p>
                   </div>
                 </div>
                 <div>
                   <label className={labelClass}>정리를 맡기시려는 이유는?</label>
-                  <div className="space-y-2">
+                  <div className="space-y-2.5">
                     {[
                       "이사 후 정리가 필요해서",
                       "공간이 부족해서",
@@ -278,7 +279,7 @@ export default function SurveyPage() {
                       "기타",
                     ].map((r) => (
                       <label key={r} className={checkClass}>
-                        <input type="checkbox" name="whyorganize" value={r} className="rounded border-warm-300 text-warm-700 focus:ring-warm-400" />
+                        <input type="checkbox" name="whyorganize" value={r} className="rounded border-n-300 text-n-700 focus:ring-n-400 accent-n-900" />
                         {r}
                       </label>
                     ))}
@@ -324,15 +325,15 @@ export default function SurveyPage() {
                 </div>
               </div>
 
-              <div className="text-center">
-                <p className="text-xs text-warm-400 mb-6 leading-relaxed">
+              <div className="text-center pt-4">
+                <p className="text-xs text-n-400 mb-6 leading-relaxed">
                   작성해주신 내용은 오직 맞춤 정리를 위해서만 사용됩니다.
                   <br />
                   모든 항목을 채우지 않아도 괜찮아요. 편하게 적어주세요.
                 </p>
                 <button
                   type="submit"
-                  className="w-full max-w-md py-3.5 rounded-full bg-warm-900 text-warm-50 text-sm font-medium hover:bg-warm-800 transition-all active:scale-[0.99]"
+                  className="w-full max-w-md py-3.5 rounded-full bg-n-900 text-white text-sm font-semibold hover:bg-n-800 transition-colors active:scale-[0.99]"
                 >
                   설문지 제출하기
                 </button>
@@ -343,10 +344,10 @@ export default function SurveyPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 border-t border-warm-200/40">
+      <footer className="py-8 border-t border-n-100 bg-n-50">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-xs text-warm-400">오래 유지되는 맞춤 정리 · 서울 여성 전문 집정리 수납 컨설팅</p>
-          <p className="text-xs text-warm-300 mt-1">&copy; 2026 공간토리. All rights reserved.</p>
+          <p className="text-[11px] text-n-400">오래 유지되는 맞춤 정리 · 서울 여성 전문 집정리 수납 컨설팅</p>
+          <p className="text-[11px] text-n-300 mt-1">&copy; 2026 공간토리. All rights reserved.</p>
         </div>
       </footer>
     </div>

@@ -27,18 +27,18 @@ export default function Contact() {
     setTimeout(() => setSubmitted(false), 5000);
   };
 
-  const inputCls = "w-full px-4 py-3.5 rounded-xl bg-white border border-n-200 text-sm text-n-800 placeholder:text-n-300 focus:outline-none focus:border-n-400 focus:ring-1 focus:ring-n-200 transition-all";
+  const inputCls = "w-full px-4 py-3.5 rounded-xl bg-white border border-n-200 text-[15px] text-n-800 placeholder:text-n-300 focus:outline-none focus:border-n-400 focus:ring-1 focus:ring-n-200 transition-all";
 
   return (
     <section id="contact" className="relative py-24 md:py-36 bg-n-50 overflow-hidden">
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <div className="text-center mb-14">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-n-400 font-medium mb-6">Contact</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-n-400 font-medium mb-6">Contact</p>
             <h2 className="text-3xl md:text-[2.75rem] font-extrabold text-n-900 tracking-tight leading-[1.15] mb-4">
               지금 바로<br />상담 신청하세요
             </h2>
-            <p className="text-n-500 text-sm">무료 상담 후, 정확한 견적을 안내해 드립니다</p>
+            <p className="text-n-500 text-[15px]">무료 상담 후, 정확한 견적을 안내해 드립니다</p>
           </div>
         </FadeIn>
 
@@ -52,8 +52,8 @@ export default function Contact() {
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-bold text-[#3C1E1E]">카카오톡 상담</p>
-                <p className="text-xs text-[#3C1E1E]/60">사진과 함께 편하게 보내주세요</p>
+                <p className="text-[15px] font-bold text-[#3C1E1E]">카카오톡 상담</p>
+                <p className="text-[13px] text-[#3C1E1E]/60">사진과 함께 편하게 보내주세요</p>
               </div>
             </a>
 
@@ -65,8 +65,8 @@ export default function Contact() {
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-bold text-n-800">전화 문의</p>
-                <p className="text-xs text-n-400">{PHONE}</p>
+                <p className="text-[15px] font-bold text-n-800">전화 문의</p>
+                <p className="text-[13px] text-n-400">{PHONE}</p>
               </div>
             </a>
           </div>
@@ -74,7 +74,7 @@ export default function Contact() {
 
         <div className="flex items-center gap-4 max-w-xl mx-auto mb-10">
           <div className="flex-1 h-px bg-n-200" />
-          <span className="text-[11px] text-n-300 whitespace-nowrap">또는 아래 폼으로 신청</span>
+          <span className="text-xs text-n-300 whitespace-nowrap">또는 아래 폼으로 신청</span>
           <div className="flex-1 h-px bg-n-200" />
         </div>
 
@@ -82,25 +82,25 @@ export default function Contact() {
           <form onSubmit={handleSubmit} className="max-w-xl mx-auto space-y-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] text-n-500 mb-1.5 font-medium">이름 *</label>
+                <label className="block text-xs text-n-500 mb-1.5 font-medium">이름 *</label>
                 <input type="text" name="name" required placeholder="이름" className={inputCls} />
               </div>
               <div>
-                <label className="block text-[11px] text-n-500 mb-1.5 font-medium">연락처 *</label>
+                <label className="block text-xs text-n-500 mb-1.5 font-medium">연락처 *</label>
                 <input type="tel" name="phone" required placeholder="010-0000-0000" className={inputCls} />
               </div>
             </div>
             <div>
-              <label className="block text-[11px] text-n-500 mb-1.5 font-medium">거주 지역</label>
+              <label className="block text-xs text-n-500 mb-1.5 font-medium">거주 지역</label>
               <input type="text" name="address" placeholder="예: 서울시 강남구" className={inputCls} />
             </div>
             <div>
-              <label className="block text-[11px] text-n-500 mb-1.5 font-medium">간단한 요청사항</label>
+              <label className="block text-xs text-n-500 mb-1.5 font-medium">간단한 요청사항</label>
               <textarea name="message" rows={3} placeholder="정리하고 싶은 공간이나 고민을 간단히 적어주세요"
                 className={`${inputCls} resize-none`} />
             </div>
             <button type="submit"
-              className={`w-full py-4 rounded-full text-sm font-semibold transition-all active:scale-[0.98] ${
+              className={`w-full py-4 rounded-full text-[15px] font-semibold transition-all active:scale-[0.98] ${
                 submitted
                   ? "bg-emerald-500 text-white"
                   : "bg-n-900 text-white hover:bg-n-800"
@@ -112,7 +112,7 @@ export default function Contact() {
 
         <FadeIn>
           <div className="max-w-xl mx-auto mt-6 text-center">
-            <a href="/survey" className="text-[13px] text-n-400 hover:text-n-600 font-medium inline-flex items-center gap-1 transition-colors">
+            <a href="/survey" className="text-sm text-n-400 hover:text-n-600 font-medium inline-flex items-center gap-1 transition-colors">
               더 정확한 맞춤 정리를 원하신다면? 설문지 작성하기
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9.5 4.5L13 8L9.5 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </a>
